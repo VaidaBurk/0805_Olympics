@@ -35,7 +35,5 @@ namespace Olympics.Controllers
             _athleteDBService.SaveToDatabase(athlete, _connection);
             return RedirectToAction("List");
         }
-
-
     }
 }
