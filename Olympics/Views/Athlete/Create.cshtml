@@ -1,4 +1,4 @@
-﻿@model Olympics.Models.AthleteModel
+﻿@model Olympics.Models.ParticipantModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,21 +13,29 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Athletes[0].Name" class="control-label"></label>
+                <input asp-for="Athletes[0].Name" class="form-control" />
+                <span asp-validation-for="Athletes[0].Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Surname" class="control-label"></label>
-                <input asp-for="Surname" class="form-control" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
+                <label asp-for="Athletes[0].Surname" class="control-label"></label>
+                <input asp-for="Athletes[0].Surname" class="form-control" />
+                <span asp-validation-for="Athletes[0].Surname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
+                <label asp-for="Athletes[0].CountryName" class="control-label">Country</label>
+                <div>
+                    @Html.DropDownListFor(model => model.Athletes[0].CountryId, new SelectList(Model.Countries, "CountryId", "CountryName"), new { @class = "form-control" })
+                    @* "CountryId" yra value, kurias perduoda, "CountryName" yra tesktas drop down liste *@
+                </div>
             </div>
             <div class="form-group">
+                <label asp-for="SportModels[0].SportId" class="control-label">Sport</label>
+                <div>
+                    @Html.DropDownListFor(model => model.SportModels[0].SportId, new SelectList(Model.SportModels, "SportId", "SportType"), new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group mt-4">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

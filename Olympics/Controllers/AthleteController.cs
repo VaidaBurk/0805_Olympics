@@ -11,28 +11,40 @@ namespace Olympics.Controllers
 {
     public class AthleteController : Controller
     {
-        private readonly SqlConnection _connection;
-        private AthleteDBService _athleteDBService;
-        public AthleteController(SqlConnection connection, AthleteDBService athleteDBService)
+        private ParticipantDBService _dbService;
+
+        public AthleteController(ParticipantDBService dbService)
         {
-            _connection = connection;
-            _athleteDBService = athleteDBService;
+            _dbService = dbService;
         }
 
         public IActionResult List()
         {
-            List<AthleteModel> athletes = _athleteDBService.GetData(_connection);
+            List<AthleteModel> athletes = _dbService.AthleteDBService.GetData();
             return View(athletes);
         }
 
         public IActionResult DisplayCreate()
         {
-            return View("Create");
+            ParticipantModel participant = new()
+            {
+                Athletes = new List<AthleteModel>()
+                {
+                    new AthleteModel()
+                    {
+
+                    }
+                },
+
+                Countries = _dbService.CountryDBService.GetData(),
+                SportModels = _dbService.SportDBService.GetData()
+            };           
+            return View("Create", participant);
         }
 
-        public IActionResult Create(AthleteModel athlete)
+        public IActionResult Create(ParticipantModel participant)
         {
-            _athleteDBService.SaveToDatabase(athlete, _connection);
+            _dbService.AthleteDBService.SaveToDatabase(participant);
             return RedirectToAction("List");
         }
     }

@@ -28,6 +28,9 @@ namespace Olympics
             services.AddControllersWithViews();
             services.AddTransient<SqlConnection>(_ => new SqlConnection(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddScoped<AthleteDBService>();
+            services.AddScoped<CountryDBService>();
+            services.AddScoped<SportDBService>();
+            services.AddScoped<ParticipantDBService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

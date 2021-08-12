@@ -1,34 +1,34 @@
-﻿@model List<AthleteModel>
+﻿@model IEnumerable<Olympics.Models.SportModel>
 
 @{
     ViewData["Title"] = "List";
 }
 
-<h1>Athletes List</h1>
+<h1>List</h1>
 
 <p>
-    <a asp-action="DisplayCreate">Create New Athlete</a>
+    <a asp-action="DisplayCreate">Create New Sport</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Country</th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeamActivity)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in @Model) {
+@foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.SportType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CountryName)
+                @Html.DisplayFor(modelItem => item.TeamActivity)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
