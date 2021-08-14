@@ -20,7 +20,7 @@ namespace Olympics.Services
         {
             List<CountryModel> countries = new();
             _connection.Open();
-            using var command = new SqlCommand("SELECT * FROM countries", _connection);
+            using var command = new SqlCommand("SELECT * FROM countries ORDER BY country_name", _connection);
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {

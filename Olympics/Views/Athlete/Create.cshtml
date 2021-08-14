@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label asp-for="SportModels[0].SportId" class="control-label">Sport</label>
                 <div>
-                    @Html.DropDownListFor(model => model.SportModels[0].SportId, new SelectList(Model.SportModels, "SportId", "SportType"), new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.Sports, new MultiSelectList(Model.SportModels, "SportId", "SportType"), new { multiple = "multiple", @class = "form-control" })
                 </div>
             </div>
             <div class="form-group mt-4">

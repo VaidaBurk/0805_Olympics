@@ -20,25 +20,14 @@ namespace Olympics.Controllers
 
         public IActionResult List()
         {
-            List<AthleteModel> athletes = _dbService.AthleteDBService.GetData();
-            return View(athletes);
+            //List<AthleteModel> athletes = _dbService.AthleteDBService.GetData();
+            //ParticipantModel participants = _dbService.AthleteDBService.GetAthleteData();
+            return View(_dbService.AthleteDBService.GetData());
         }
 
         public IActionResult DisplayCreate()
         {
-            ParticipantModel participant = new()
-            {
-                Athletes = new List<AthleteModel>()
-                {
-                    new AthleteModel()
-                    {
-
-                    }
-                },
-
-                Countries = _dbService.CountryDBService.GetData(),
-                SportModels = _dbService.SportDBService.GetData()
-            };           
+            ParticipantModel participant = _dbService.newAthlete();          
             return View("Create", participant);
         }
 
@@ -47,5 +36,10 @@ namespace Olympics.Controllers
             _dbService.AthleteDBService.SaveToDatabase(participant);
             return RedirectToAction("List");
         }
+
+        //public IActionResult FilterAthletesByCountry()
+        //{
+        //    return View();
+        //}
     }
 }

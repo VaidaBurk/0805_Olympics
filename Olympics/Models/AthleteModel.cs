@@ -12,5 +12,8 @@ namespace Olympics.Models
         public string Surname { get; set; }
         public int CountryId { get; set; }
         public string CountryName { get; set; }
+        public string Sports { get; set; }
+        public int[] SportsId { get; set; }
+      
     }
 }

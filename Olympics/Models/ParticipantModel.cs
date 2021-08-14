@@ -10,5 +10,20 @@ namespace Olympics.Models
         public List<CountryModel> Countries { get; set; }
         public List<AthleteModel> Athletes { get; set; }
         public List<SportModel> SportModels { get; set; }
+        public List<int> Sports { get; set; }
+
+        public ParticipantModel(List<AthleteModel> athletes, List<CountryModel> countries, List<SportModel> sportModels)
+        {
+            Athletes = athletes;
+            Countries = countries;
+            SportModels = sportModels;
+        }
+
+        public ParticipantModel()
+        {
+
+        }
+
+
     }
 }
