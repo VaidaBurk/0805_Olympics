@@ -1,15 +1,43 @@
-﻿@model List<AthleteModel>
+﻿@model ParticipantModel
 
 @{
     ViewData["Title"] = "List";
 }
 
-<h1>Athletes List</h1>
+<h1>Athletes</h1>
 
 <p>
     <a asp-action="DisplayCreate">Create New Athlete</a>
 </p>
 
+@*filtras*@
+
+<form asp-action="ListFiltered" method="post">
+    <div class="row">
+
+        <div class="form-group ml-3">
+            @Html.DropDownListFor(model => model.FilterByCountryId, new SelectList(Model.Countries, "CountryId", "CountryName"), "All Countries", new { @class = "form-control-sm" })
+        </div>
+        <div>
+            <input type="submit" value="Filter by Country" class="btn btn-sm btn-outline-primary ml-1" />
+        </div>
+
+        <div class="form-group ml-3">
+            @Html.DropDownListFor(model => model.FilterBySportId, new SelectList(Model.SportModels, "SportId", "SportType"), "All Sports", new { @class = "form-control-sm" })
+        </div>
+        <div>
+            <input type="submit" value="Filter by Sport" class="btn btn-sm btn-outline-primary ml-1" />
+        </div>
+
+        <div class="form-group ml-3">
+            @Html.DropDownListFor(model => model.FilterIsTeamSport, new[] { new SelectListItem { Text = "Team", Value = "1" } , new SelectListItem { Text = "Not Team", Value = "2" } } , "All Sports", new { @class = "form-control-sm" })
+        </div>
+        <div>
+            <input type="submit" value="Filter by Type" class="btn btn-sm btn-outline-primary ml-1" />
+        </div>
+
+    </div>
+</form>
 
 <table class="table">
     <thead>
@@ -22,7 +50,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in @Model)
+        @foreach (var item in @Model.Athletes)
         {
             <tr>
                 <td>

@@ -37,6 +37,7 @@ namespace Olympics.Services
         //    return (athletes);
         //}
 
+
         public List<AthleteModel> GetData()
         {
             List<AthleteModel> athletes = new(); 
@@ -101,35 +102,75 @@ namespace Olympics.Services
             return id;
         }
 
-        //public List<AthleteModel> FilterByCountry(string countryName)
-        //{
-        //    List<AthleteModel> athletes = new();
-        //    _connection.Open();
-        //    using var command = new SqlCommand($@"SELECT a.id, a.name, a.surname, a.country_id, c.country_name, STRING_AGG(s.sport_type, ', ') AS 'sports'
-        //                                        FROM athletes a
-        //                                        JOIN countries c
-        //                                        ON a.country_id = c.country_id
-        //                                        JOIN athletes_sports ats
-        //                                        ON a.id = ats.athlete_id
-        //                                        JOIN sports s
-        //                                        ON ats.sport_id = s.sport_id
-        //                                        GROUP BY a.id, a.name, a.surname, a.country_id, c.country_name
-        //                                        HAVING c.country_name = {countryName}", _connection);
-        //    using var reader = command.ExecuteReader();
-        //    while (reader.Read())
-        //    {
-        //        athletes.Add(new()
-        //        {
-        //            Id = reader.GetInt32(0),
-        //            Name = reader.GetString(1),
-        //            Surname = reader.GetString(2),
-        //            CountryId = reader.GetInt32(3),
-        //            CountryName = reader.GetString(4),
-        //            Sports = reader.GetString(5)
-        //        });
-        //    }
-        //    _connection.Close();
-        //    return athletes;
-        //}
+        public List<AthleteModel> GetFilteredData(int sportId)
+        {
+            List<AthleteModel> athletes = new();
+            _connection.Open();
+            using var command = new SqlCommand($@"
+                                                SELECT a.name, a.surname, c.country_name, s.sport_type
+                                                FROM athletes a
+                                                JOIN athletes_sports ats
+                                                ON a.id = ats.athlete_id
+                                                JOIN countries c
+                                                ON a.country_id = c.country_id
+                                                JOIN sports s
+                                                ON ats.sport_id = s.sport_id
+                                                WHERE ats.sport_id = {sportId}
+                                                ", _connection);
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                athletes.Add(new()
+                {
+                    Name = reader.GetString(0),
+                    Surname = reader.GetString(1),
+                    CountryName = reader.GetString(2),
+                    Sports = reader.GetString(3)
+                });
+            }
+            _connection.Close();
+            return athletes;
+        }
+
+        public List<AthleteModel> GetTeamSportData(int isTeamActivity)
+        {
+            List<AthleteModel> athletes = new();
+            string condition;
+            if (isTeamActivity == 1)
+            {
+                condition = "1";
+            }
+            else
+            {
+                condition = "0";
+            }
+            
+            _connection.Open();
+            using var command = new SqlCommand($@"
+                                                SELECT a.name, a.surname, c.country_name, STRING_AGG(s.sport_type, ', ') AS 'sports'
+                                                FROM athletes a
+                                                JOIN athletes_sports ats
+                                                ON a.id = ats.athlete_id
+                                                JOIN countries c
+                                                ON a.country_id = c.country_id
+                                                JOIN sports s
+                                                ON ats.sport_id = s.sport_id
+                                                WHERE s.team_activity = {condition}
+                                                GROUP BY a.name, a.surname, c.country_name
+                                                ", _connection);
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                athletes.Add(new()
+                {
+                    Name = reader.GetString(0),
+                    Surname = reader.GetString(1),
+                    CountryName = reader.GetString(2),
+                    Sports = reader.GetString(3)
+                });
+            }
+            _connection.Close();
+            return athletes;
+        }
     }
 }

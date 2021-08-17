@@ -11,6 +11,10 @@ namespace Olympics.Models
         public List<AthleteModel> Athletes { get; set; }
         public List<SportModel> SportModels { get; set; }
         public List<int> Sports { get; set; }
+        public int FilterByCountryId { get; set; }
+        public int FilterBySportId { get; set; }
+        public int FilterIsTeamSport { get; set; }
+
 
         public ParticipantModel(List<AthleteModel> athletes, List<CountryModel> countries, List<SportModel> sportModels)
         {
@@ -23,7 +27,5 @@ namespace Olympics.Models
         {
 
         }
-
-
     }
 }

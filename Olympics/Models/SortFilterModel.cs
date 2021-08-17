@@ -7,6 +7,6 @@ namespace Olympics.Models
 {
     public class SortFilterModel
     {
-        public string FilterCountry { get; set; }
+        public int FilterCountry { get; set; }
     }
 }

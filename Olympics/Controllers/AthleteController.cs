@@ -22,7 +22,30 @@ namespace Olympics.Controllers
         {
             //List<AthleteModel> athletes = _dbService.AthleteDBService.GetData();
             //ParticipantModel participants = _dbService.AthleteDBService.GetAthleteData();
-            return View(_dbService.AthleteDBService.GetData());
+            return View(_dbService.GetData());
+        }
+
+        public IActionResult ListFiltered(ParticipantModel model)
+        {
+           ParticipantModel dbModel = _dbService.GetData();
+
+            if (model.FilterByCountryId != 0)
+            {
+                List<AthleteModel> filteredAthletes = dbModel.Athletes.Where(a => a.CountryId == model.FilterByCountryId).ToList();
+                dbModel.Athletes = filteredAthletes;
+            }
+            if(model.FilterBySportId != 0)
+            {
+                dbModel = _dbService.GetFilteredData(model.FilterBySportId);
+                return View("List", dbModel);
+            }
+            if (model.FilterIsTeamSport != 0)
+            {
+                dbModel = _dbService.GetTeamSportData(model.FilterIsTeamSport);
+                return View("List", dbModel);
+            }
+            return View("List", dbModel);
+
         }
 
         public IActionResult DisplayCreate()
@@ -37,9 +60,9 @@ namespace Olympics.Controllers
             return RedirectToAction("List");
         }
 
-        //public IActionResult FilterAthletesByCountry()
-        //{
-        //    return View();
-        //}
+        public IActionResult FilterByCountry()
+        {
+            return View("List");
+        }
     }
 }

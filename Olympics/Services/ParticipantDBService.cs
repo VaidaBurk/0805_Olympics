@@ -30,6 +30,27 @@ namespace Olympics.Services
                 SportModels = SportDBService.GetData()
             };
         }
+
+        public ParticipantModel GetFilteredData(int sportId)
+        {
+            return new ParticipantModel()
+            {
+                Athletes = AthleteDBService.GetFilteredData(sportId),
+                Countries = CountryDBService.GetData(),
+                SportModels = SportDBService.GetData()
+            };
+        }
+
+        public ParticipantModel GetTeamSportData(int isTeamActivity)
+        {
+            return new ParticipantModel()
+            {
+                Athletes = AthleteDBService.GetTeamSportData(isTeamActivity),
+                Countries = CountryDBService.GetData(),
+                SportModels = SportDBService.GetData()
+            };
+        }
+
         public ParticipantModel newAthlete()
         {
             List <AthleteModel > athletes = new List<AthleteModel>();
