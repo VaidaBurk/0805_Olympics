@@ -20,7 +20,7 @@ namespace Olympics.Services
         {
             List<SportModel> sports = new();
             _connection.Open();
-            using var command = new SqlCommand("SELECT * FROM sports", _connection);
+            using var command = new SqlCommand("SELECT * FROM sports ORDER BY 2", _connection);
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {

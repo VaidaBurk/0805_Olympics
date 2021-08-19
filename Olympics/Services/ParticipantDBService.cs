@@ -35,7 +35,16 @@ namespace Olympics.Services
         {
             return new ParticipantModel()
             {
-                Athletes = AthleteDBService.GetFilteredData(sportId),
+                Athletes = AthleteDBService.GetFilteredBySportData(sportId),
+                Countries = CountryDBService.GetData(),
+                SportModels = SportDBService.GetData()
+            };
+        }
+        public ParticipantModel GetFilteredByCountryData(int countryId)
+        {
+            return new ParticipantModel()
+            {
+                Athletes = AthleteDBService.GetFilteredByCountryData(countryId),
                 Countries = CountryDBService.GetData(),
                 SportModels = SportDBService.GetData()
             };
@@ -46,6 +55,16 @@ namespace Olympics.Services
             return new ParticipantModel()
             {
                 Athletes = AthleteDBService.GetTeamSportData(isTeamActivity),
+                Countries = CountryDBService.GetData(),
+                SportModels = SportDBService.GetData()
+            };
+        }
+
+        public ParticipantModel GetSortedData(int sortBy)
+        {
+            return new ParticipantModel()
+            {
+                Athletes = AthleteDBService.GetSortedData(sortBy),
                 Countries = CountryDBService.GetData(),
                 SportModels = SportDBService.GetData()
             };

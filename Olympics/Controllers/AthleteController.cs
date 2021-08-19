@@ -31,8 +31,10 @@ namespace Olympics.Controllers
 
             if (model.FilterByCountryId != 0)
             {
-                List<AthleteModel> filteredAthletes = dbModel.Athletes.Where(a => a.CountryId == model.FilterByCountryId).ToList();
-                dbModel.Athletes = filteredAthletes;
+                //List<AthleteModel> filteredAthletes = dbModel.Athletes.Where(a => a.CountryId == model.FilterByCountryId).ToList();
+                //dbModel.Athletes = filteredAthletes;
+                dbModel = _dbService.GetFilteredByCountryData(model.FilterByCountryId);
+                return View("List", dbModel);
             }
             if(model.FilterBySportId != 0)
             {
@@ -44,9 +46,13 @@ namespace Olympics.Controllers
                 dbModel = _dbService.GetTeamSportData(model.FilterIsTeamSport);
                 return View("List", dbModel);
             }
+            if(model.SortBy != 0)
+            {
+                dbModel = _dbService.GetSortedData(model.SortBy);
+            }
             return View("List", dbModel);
-
         }
+
 
         public IActionResult DisplayCreate()
         {

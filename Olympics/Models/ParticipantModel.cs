@@ -14,6 +14,7 @@ namespace Olympics.Models
         public int FilterByCountryId { get; set; }
         public int FilterBySportId { get; set; }
         public int FilterIsTeamSport { get; set; }
+        public int SortBy { get; set; }
 
 
         public ParticipantModel(List<AthleteModel> athletes, List<CountryModel> countries, List<SportModel> sportModels)

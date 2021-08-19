@@ -37,6 +37,16 @@
         </div>
 
     </div>
+    <div class="row">
+        <div class="form-group ml-3">
+            @Html.DropDownListFor(model => model.SortBy, new[] { new SelectListItem { Text = "Name", Value = "1" }, 
+                new SelectListItem { Text = "Surname", Value = "2" }, new SelectListItem { Text = "Country", Value = "3" } }, "Sort by...",
+                new { @class = "form-control-sm" })
+        </div>
+        <div>
+            <input type="submit" value="Sort" class="btn btn-sm btn-outline-primary ml-1" />
+        </div>
+    </div>
 </form>
 
 <table class="table">
